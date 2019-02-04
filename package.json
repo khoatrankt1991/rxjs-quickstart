@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "live-server --port=8000",
-    "watch": "webpack -w"
+    "watch": "webpack -w",
+    "prod": "webpack -p"
   },
   "author": "Brad Traversy",
   "license": "ISC",

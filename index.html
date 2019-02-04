@@ -1,27 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>RxJS Boiler</title>
+	<title>RxJS QuickStart</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		body {
 			background: #252830;
 			color: #cfd2da;
+			font-size: 1rem;
+		}
+		h1 {
+			text-align: center;
+			font-size: 2rem;
 		}
 		h2 {
-			text-align: center;
+			text-align: left;
 			color: #cfd2da;
+		}
+		button, input {
+			padding: 0.2rem;
+			font-size: 1rem;
+			color: #cfd2da;
+			background: #252830;
+			border: 1px solid #cfd2da;
+			border-radius: 5px;
+		}
+		.rowDirection {
+			display: flex;
+			flex-direction: row;
+		}
+		.hashtag {
+			margin-bottom: 1rem;
+		}
+		.hashtag > a {
+			color: #E64759;
+			font-weight: 400;
+			display: inline-block;
+			text-decoration: none;
+		}
+		.hashtag > a::before {
+			content: '#'
 		}
 	</style>
 </head>
 <body>
-	<h1>RxJS Boiler</h1>
+	<h1>RxJS Quickstart</h1>
 	<!-- <p>For more info, visit <a target="_blank" href="https://github.com/bradtraversy/rxjs_boiler">https://github.com/bradtraversy/rxjs_boiler</a></p> -->
-	<h2>Rx from button</h2>
+	<h2>Rx from Event (button click)</h2>
 	<button id="btn">Click me!</button>
+	<b id="btnOut"></b>
+	<h2>Rx from Event (input & debounce time)</h2>
+	<div class="hashtag">
+		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/operators/debounce">debounce</a>
+		<a target="_blank" href="#">debounceTime</a>
+		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/index/function/fromEvent">fromEvent</a>
+		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/index/function/pipe">pipe</a>
+	</div>
+	
 	<input id="input" type="text">
-	<div id="output"></div>
-	<button id="btn2">Click me2!</button>
-	<button id="btn3">Click me3!</button>
+	<div id="output" style="width: 200px;"></div>
+	<h2>RxJS Interval & Timer</h2>
+	<div class="rowDirection">
+			<label>Interval time 1000 : </label>
+			<div id="outInterval"></div>
+	</div>
+	<div class="rowDirection">
+			<label>Timer 5000, 500 mean start after 5s and interval time is 500 : </label>
+			<div id="outTimer"></div>
+	</div>
 	<script src="./dist/app.bundle.js"></script>
 </body>
 </html>
