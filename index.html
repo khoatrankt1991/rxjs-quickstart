@@ -17,7 +17,7 @@
 			text-align: left;
 			color: #cfd2da;
 		}
-		button, input {
+		textarea, button, input {
 			padding: 0.2rem;
 			font-size: 1rem;
 			color: #cfd2da;
@@ -41,6 +41,14 @@
 		.hashtag > a::before {
 			content: '#'
 		}
+		.console, #outputMerge {
+			margin: 10px 0;
+			background: #cfd2da;
+			color: #252830;
+			padding: 1rem;
+			border: 1px solid #252830;
+			border-radius: 5px;
+		}
 	</style>
 </head>
 <body>
@@ -52,8 +60,9 @@
 	<h2>Rx from Event (input & debounce time)</h2>
 	<div class="hashtag">
 		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/operators/debounce">debounce</a>
-		<a target="_blank" href="#">debounceTime</a>
+		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/operators/debounceTime">debounceTime</a>
 		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/index/function/fromEvent">fromEvent</a>
+		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/index/function/fromPromise">fromPromise</a>
 		<a target="_blank" href="https://rxjs-dev.firebaseapp.com/api/index/function/pipe">pipe</a>
 	</div>
 	
@@ -68,6 +77,20 @@
 			<label>Timer 5000, 500 mean start after 5s and interval time is 500 : </label>
 			<div id="outTimer"></div>
 	</div>
+	<h2>RxJS Map & Fluck</h2>
+	<h3>Map</h3>
+	<input id="inputMap" type="text" />
+	<b id="outputMap"></b><br />
+	<h3>Fluck</h3>
+	<p style="color:#E64759">Inspect element on chrome to see the result</p>
+	<h2>Merge & Concat</h2>
+	<b>Merge :</b><button id="btnStartMerge">Start</button><button id="btnStopMerge">Stop</button>
+	<button id="btnClearMerge">Clear</button>
+	<div id="outputMerge"></div>
+	<h2>Merge & Concat</h2>
+	<b>Concat :</b><button id="btnStartConcat">Start</button><button id="btnStopConcat">Stop</button>
+	<button id="btnClearConcat">Clear</button>
+	<div id="outputConcat" class="console"></div>
 	<script src="./dist/app.bundle.js"></script>
 </body>
 </html>

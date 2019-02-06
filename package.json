@@ -8,7 +8,7 @@
     "watch": "webpack -w",
     "prod": "webpack -p"
   },
-  "author": "Brad Traversy",
+  "author": "KhoaTran",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.14.0",
