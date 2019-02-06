@@ -80,33 +80,58 @@ btnStopMerge$.subscribe(e => alert('Stop merge interval'));
 btnClearMerge$.subscribe(e => {
   document.getElementById('outputMerge').innerHTML = '';
 });
-  // concat
-  const btnStartConcat = $('#btnStartConcat');
-  const btnStopConcat = $('#btnStopConcat');
-  const btnClearConcat = $('#btnClearConcat');
-  const btnStopConcat$ = Rx.Observable.fromEvent(btnStopConcat, 'click');
-  const btnStartConcat$ = Rx.Observable.fromEvent(btnStartConcat, 'click');
-  const btnClearConcat$ = Rx.Observable.fromEvent(btnClearConcat, 'click');
-  btnStartConcat$.subscribe(e => {
-    const src1$ = Rx.Observable.interval(500).pipe(scan(x => x+ 1, 0)).map(e => 'Concat 1: ' + e).take(10);
-    const src2$ = Rx.Observable.interval(2000).pipe(scan(x => x+ 1, 0)).map(e => 'Concat 2: ' + e).takeUntil(btnStopConcat$);
-    const src$ = src1$.concat(src2$).takeUntil(btnStopConcat$);
-    src$.subscribe(e => {
-      console.log(e);
-      const outMsg = document.createElement('p');
-      outMsg.innerHTML = e;
-      // $('#outputConcat').appendChild(outMsg);
-      document.getElementById('outputConcat').appendChild(outMsg);
-    }, err => console.log('err', err), () => console.log('Complete Interval Concat'));
-    // src1$.subscribe(e => console.log(e));
-    // src2$.subscribe(e => console.log(e));
-  })
-  btnStopConcat$.subscribe(e => alert('Stop concat interval'));
-  btnClearConcat$.subscribe(e => {
-    document.getElementById('outputConcat').innerHTML = '';
-  });
+// concat
+const btnStartConcat = $('#btnStartConcat');
+const btnStopConcat = $('#btnStopConcat');
+const btnClearConcat = $('#btnClearConcat');
+const btnStopConcat$ = Rx.Observable.fromEvent(btnStopConcat, 'click');
+const btnStartConcat$ = Rx.Observable.fromEvent(btnStartConcat, 'click');
+const btnClearConcat$ = Rx.Observable.fromEvent(btnClearConcat, 'click');
+btnStartConcat$.subscribe(e => {
+  const src1$ = Rx.Observable.interval(500).pipe(scan(x => x+ 1, 0)).map(e => 'Concat 1: ' + e).take(10);
+  const src2$ = Rx.Observable.interval(2000).pipe(scan(x => x+ 1, 0)).map(e => 'Concat 2: ' + e).takeUntil(btnStopConcat$);
+  const src$ = src1$.concat(src2$).takeUntil(btnStopConcat$);
+  src$.subscribe(e => {
+    console.log(e);
+    const outMsg = document.createElement('p');
+    outMsg.innerHTML = e;
+    // $('#outputConcat').appendChild(outMsg);
+    document.getElementById('outputConcat').appendChild(outMsg);
+  }, err => console.log('err', err), () => console.log('Complete Interval Concat'));
+  // src1$.subscribe(e => console.log(e));
+  // src2$.subscribe(e => console.log(e));
+})
+btnStopConcat$.subscribe(e => alert('Stop concat interval'));
+btnClearConcat$.subscribe(e => {
+  document.getElementById('outputConcat').innerHTML = '';
+});
 
-  //  Rx.Observable.of('Hello').merge(Rx.Observable.of('World')).subscribe(e => console.log('Merge', e));
-  const hello$ = Rx.Observable.of('Hello');
-  hello$.switchMap(e => Rx.Observable.of(e + ' World')).subscribe(e => console.log('Merge', e));
+//  Rx.Observable.of('Hello').merge(Rx.Observable.of('World')).subscribe(e => console.log('Merge', e));
+const hello$ = Rx.Observable.of('Hello');
+hello$.switchMap(e => Rx.Observable.of(e + ' World')).subscribe(e => console.log('Merge', e));
   hello$.subscribe(e => console.log('hello', e));
+
+// Merge Map
+const firstName$ = Rx.Observable.fromEvent($('#firstName'), 'keyup');
+const lastName$ = Rx.Observable.fromEvent($('#lastName'), 'keyup');
+const fullName$ = firstName$.mergeMap(e => lastName$.map(last => e.target.value + ' ' + last.target.value));
+fullName$.subscribe(e => document.getElementById('outFullName').innerText = e);
+
+// Switch Map
+const btnStopSwitch$ = Rx.Observable.fromEvent($('#btnStopSwitch'), 'click');
+Rx.Observable.fromEvent($('#btnClearSwitch'), 'click').subscribe(
+  () => document.getElementById('outputSwitchMap').innerText = ''
+);
+const btnNormal$ = Rx.Observable.fromEvent($('#normalBtn'), 'click');
+const btnSwitch$ = Rx.Observable.fromEvent($('#switchBtn'), 'click');
+const interval1$ = Rx.Observable.interval(500).takeUntil(btnStopSwitch$);
+btnNormal$.subscribe(e => interval1$.subscribe(e1 => {
+  const outMsg = document.createElement('p');
+  outMsg.innerHTML = e1;
+  document.getElementById('outputSwitchMap').appendChild(outMsg);
+}));
+btnSwitch$.switchMap(() => interval1$).subscribe(e => {
+  const outMsg = document.createElement('p');
+  outMsg.innerHTML = e;
+  document.getElementById('outputSwitchMap').appendChild(outMsg);
+});
