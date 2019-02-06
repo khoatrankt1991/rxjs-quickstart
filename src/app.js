@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Rx from 'rxjs/Rx';
 import { map, catchError, scan } from 'rxjs/operators';
-import { debounceTime, delay } from 'rxjs/operators';
+// import { debounceTime, delay } from 'rxjs/operators';
 
 console.log('RxJS is running...');
 
@@ -11,7 +11,7 @@ const output = $('#output');
 
 const btn$ = Rx.Observable.fromEvent(btn, 'click').pipe(scan(x => x +1, 0));
 btn$.subscribe(x => document.getElementById('btnOut').innerText = 'You Clicked ' + x);
-const input$ = Rx.Observable.fromEvent(input, 'keyup').pipe(debounceTime(200));
+const input$ = Rx.Observable.fromEvent(input, 'keyup').map(e => e.target.value).debounceTime(1000).distinctUntilChanged();
 
 const findUserByName = (name) => {
   return $.ajax({
@@ -23,12 +23,12 @@ const findUserByName = (name) => {
 const profileDOM = ({ login, avatar_url, followers, following}) => `<div><h3>${login}</h3><p>Followers: ${followers}</p><p>Followings: ${following}</p><img style="width: 100%;" src="${avatar_url}" /></div>`;
 
 input$.subscribe(e => {
-  Rx.Observable.fromPromise(findUserByName(e.target.value)).subscribe(result => {
+  Rx.Observable.fromPromise(findUserByName(e)).subscribe(result => {
     console.log('result is', result);
     const child = result.data.message ? 'NotFound' : profileDOM(result.data);
     document.getElementById('output').innerHTML = child; 
   })
-  console.log('typed ', e.target.value);
+  console.log('typed ', e);
 });
 
 const interval$ = Rx.Observable.interval(1000).take(20);
